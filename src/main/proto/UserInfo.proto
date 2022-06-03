@@ -1,0 +1,36 @@
+//指定proto3格式
+syntax = "proto3";
+//一些生成代码的设置
+option java_multiple_files = true;//以外部类模式生成
+option java_package = "com.example.grpcj.common.gen";//所在包名
+option java_outer_classname = "UserInfoProto";//最外层类名称
+
+message UserInfo{
+  int32 id = 1;
+  string name = 2;
+  int32 age = 3;
+  School school = 4;
+}
+
+message School{
+  string address = 1;
+  string schoolName = 2;
+}
+// 请求消息体
+message UserInfoRequest{
+  UserInfo userInfo = 1;
+}
+// 响应消息体
+message UserInfoResponse{
+  int32 statusCode = 1;
+  string errorMsg = 2;
+  string result = 3;
+}
+
+// userInfo服务: 增删改查
+service UserInfoServices{
+  rpc AddUserInfo(UserInfoRequest) returns (UserInfoResponse) {}
+  rpc DeleteUserInfo(UserInfoRequest) returns (UserInfoResponse) {}
+  rpc UpdateUserInfo(UserInfoRequest) returns (UserInfoResponse) {}
+  rpc GetUserInfo(UserInfoRequest) returns (UserInfoResponse) {}
+}
