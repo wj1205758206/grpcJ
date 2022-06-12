@@ -4,7 +4,10 @@ import com.example.grpcj.common.gen.UserInfo;
 import com.example.grpcj.common.gen.UserInfoRequest;
 import com.example.grpcj.common.gen.UserInfoResponse;
 import com.example.grpcj.common.gen.UserInfoServicesGrpc;
+import com.google.protobuf.TextFormat;
 import io.grpc.stub.StreamObserver;
+import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,7 +158,7 @@ public class UserInfoServiceImpl extends UserInfoServicesGrpc.UserInfoServicesIm
         try {
             if (userInfoMap.containsKey(userInfo.getId())) {
                 UserInfo user = userInfoMap.get(userInfo.getId());
-                logger.info("get user info: ", user.toString());
+                logger.info("get user info: " + TextFormat.printToUnicodeString(user));
                 response = UserInfoResponse.newBuilder()
                         .setStatusCode(200)
                         .setResult(String.valueOf(user))

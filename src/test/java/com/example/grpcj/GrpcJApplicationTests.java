@@ -34,8 +34,8 @@ class GrpcJApplicationTests {
         System.out.println(user);
         boolean b = grpcClient.addUserInfo(user);
         System.out.println("-----" + b);
-//        String userInfo = grpcClient.getUserInfo(1);
-//        System.out.println(userInfo);
+        String userInfo = grpcClient.getUserInfo(1);
+        System.out.println(userInfo);
     }
 
 }
