@@ -14,7 +14,39 @@ public class KafkaTopics {
     ConstantConfig constantConfig;
 
     @Bean
-    public NewTopic userInfoTopic(){
+    public NewTopic userInfoTopic() {
         return new NewTopic(constantConfig.getUserInfoTopic(), constantConfig.getPartitionNum(), (short) 1);
+    }
+
+    @Bean
+    public NewTopic addUserInfoTopic() {
+        return new NewTopic(
+                constantConfig.getTopics().get("addUserInfoTopic"),
+                constantConfig.getPartitions().get("addUserInfoTopic"),
+                (short) 1);
+    }
+
+    @Bean
+    public NewTopic deleteUserInfoTopic() {
+        return new NewTopic(
+                constantConfig.getTopics().get("deleteUserInfoTopic"),
+                constantConfig.getPartitions().get("deleteUserInfoTopic"),
+                (short) 1);
+    }
+
+    @Bean
+    public NewTopic updateUserInfoTopic() {
+        return new NewTopic(
+                constantConfig.getTopics().get("updateUserInfoTopic"),
+                constantConfig.getPartitions().get("updateUserInfoTopic"),
+                (short) 1);
+    }
+
+    @Bean
+    public NewTopic getUserInfoTopic() {
+        return new NewTopic(
+                constantConfig.getTopics().get("getUserInfoTopic"),
+                constantConfig.getPartitions().get("getUserInfoTopic"),
+                (short) 1);
     }
 }

@@ -43,3 +43,13 @@ spring:
 constant:
   partitionNum: 8
   userInfoTopic: userInfoTopic
+  topics:
+    addUserInfoTopic: addUserInfoTopic
+    deleteUserInfoTopic: deleteUserInfoTopic
+    updateUserInfoTopic: updateUserInfoTopic
+    getUserInfoTopic: getUserInfoTopic
+  partitions:
+    addUserInfoTopic: 4
+    deleteUserInfoTopic: 4
+    updateUserInfoTopic: 4
+    getUserInfoTopic: 4
