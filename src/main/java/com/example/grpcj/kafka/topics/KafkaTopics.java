@@ -1,4 +1,4 @@
-package com.example.grpcj.kafka;
+package com.example.grpcj.kafka.topics;
 
 import com.example.grpcj.common.configuration.ConstantConfig;
 import org.apache.kafka.clients.admin.NewTopic;

@@ -1,4 +1,4 @@
-package com.example.grpcj.kafka;
+package com.example.grpcj.kafka.consumer;
 
 
 import com.example.grpcj.client.GrpcClient;
@@ -13,35 +13,35 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class KafkaConsumer {
-    private static final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
+public class UpdateUserInfoConsumer {
+    private static final Logger logger = LoggerFactory.getLogger(UpdateUserInfoConsumer.class);
     @Resource
     GrpcClient grpcClient;
 
-    @KafkaListener(topics = "userInfoTopic", groupId = "userInfoGroup")
+    @KafkaListener(topics = "updateUserInfoTopic", groupId = "userInfoGroup")
     public boolean consume(List<ConsumerRecord<?, ?>> records) {
-        logger.info("[kafkaConsumer] consumer records count: " + records.size());
+        logger.info("[UpdateUserInfoConsumer] consumer records count: " + records.size());
         int successCount = 0;
         int failCount = 0;
         for (ConsumerRecord record : records) {
-            logger.info("[kafkaConsumer] topic={}, partition={}, value={}",
+            logger.info("[UpdateUserInfoConsumer] topic={}, partition={}, value={}",
                     record.topic(), record.partition(), record.value());
             UserInfo userInfo = (UserInfo) record.value();
             boolean isSuccess = false;
             try {
-                isSuccess = grpcClient.addUserInfo(userInfo);
+                isSuccess = grpcClient.updateUserInfo(userInfo.getId());
             } catch (Exception e) {
-                logger.error("[kafkaConsumer] addUserInfo exception: " + e.getMessage());
+                logger.error("[UpdateUserInfoConsumer] update exception: " + e.getMessage());
             }
             if (isSuccess) {
                 successCount++;
-                logger.info("[kafkaConsumer] addUserInfo success, userInfo={}", userInfo.toString());
+                logger.info("[UpdateUserInfoConsumer] update success, userInfo={}", userInfo.toString());
             } else {
                 failCount++;
-                logger.info("[kafkaConsumer] addUserInfo fail, userInfo={}", userInfo.toString());
+                logger.info("[UpdateUserInfoConsumer] update fail, userInfo={}", userInfo.toString());
             }
         }
-        logger.info("[kafkaConsumer] total={},successCount={},failCount={}", records.size(), successCount, failCount);
+        logger.info("[UpdateUserInfoConsumer] total={},successCount={},failCount={}", records.size(), successCount, failCount);
         return true;
     }
 }
